@@ -62,7 +62,7 @@ const config = {
     
     // Language configuration - UPDATED TO WORK PROPERLY
     languageConfig: {
-        defaultLanguage: 'it', // This will now work as expected
+        defaultLanguage: 'fr', // This will now work as expected
         availableLanguages: ['it', 'en', 'fr'], // Only these 3 languages will be selectable
         showLanguageSelector: true,
         autoDetectLanguage: true
