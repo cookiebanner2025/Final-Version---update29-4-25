@@ -1889,7 +1889,7 @@ function injectConsentHTML(detectedCookies, language = 'en') {
     }
 
     .cookie-consent-content p {
-        margin: 0 0 24px 0;
+        margin: 0 0 10px 0;
         font-size: ${config.bannerStyle.description.fontSize};
         color: ${config.bannerStyle.description.color};
         line-height: ${config.bannerStyle.description.lineHeight};
