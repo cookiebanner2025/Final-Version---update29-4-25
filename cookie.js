@@ -49,7 +49,7 @@ const config = {
     
     // Language configuration
     languageConfig: {
-        defaultLanguage: 'lv',
+        defaultLanguage: 'en',
         availableLanguages: [], // Only en and fr will be used as requested
         showLanguageSelector: true,
         autoDetectLanguage: true
