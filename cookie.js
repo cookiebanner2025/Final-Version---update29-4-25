@@ -1901,7 +1901,7 @@ function injectConsentHTML(detectedCookies, language = 'en') {
         font-size: 13px;
         font-weight: 500;
         display: inline-block;
-        margin-bottom: 24px;
+        margin-bottom: 8px;
         transition: color 0.2s ease;
     }
 
