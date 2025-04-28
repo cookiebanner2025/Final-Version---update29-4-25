@@ -82,32 +82,34 @@ const config = {
     uiTheme: 'default',
     
     // Banner styling
-    bannerStyle: {
-        background: '#ffffff',
-        borderRadius: '12px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
-        width: '440px',
-        padding: '24px',
-        textColor: '#2c3e50',
-        linkColor: '#3498db',
-        linkHoverColor: '#1d6fa5',
-        border: {
-            enabled: false,
-            width: '1px',
-            style: 'solid',
-            color: '#e0e0e0'
-        },
-        title: {
-            fontSize: '18px',
-            fontWeight: '600',
-            color: '#2c3e50'
-        },
-        description: {
-            fontSize: '14px',
-            lineHeight: '1.5',
-            color: '#7f8c8d'
-        }
+   bannerStyle: {
+    background: '#ffffff',
+    borderRadius: '12px',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+    width: 'auto', // Changed from fixed width to auto
+    maxWidth: '440px', // Add max-width to prevent it from becoming too wide
+    minWidth: '300px', // Add min-width to prevent it from becoming too narrow
+    padding: '24px',
+    textColor: '#2c3e50',
+    linkColor: '#3498db',
+    linkHoverColor: '#1d6fa5',
+    border: {
+        enabled: false,
+        width: '1px',
+        style: 'solid',
+        color: '#e0e0e0'
     },
+    title: {
+        fontSize: '18px',
+        fontWeight: '600',
+        color: '#2c3e50'
+    },
+    description: {
+        fontSize: '14px',
+        lineHeight: '1.5',
+        color: '#7f8c8d'
+    }
+},
     
     // Button styling
     buttonStyle: {
@@ -116,6 +118,8 @@ const config = {
         fontWeight: '600',
         fontSize: '14px',
         transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+         minWidth: '120px', // Add min-width to buttons
+         whiteSpace: 'nowrap', // Prevent text wrapping
         
         accept: {
             background: '#2ecc71',
@@ -1635,23 +1639,23 @@ function injectConsentHTML(detectedCookies, language = 'en') {
         </svg>
     </div>` : '';
     
-    const html = `
-    <!-- Main Consent Banner -->
-    <div id="cookieConsentBanner" class="cookie-consent-banner">
-        <div class="cookie-consent-container">
-            ${languageSelector}
-            <div class="cookie-consent-content">
-                <h2>${lang.title}</h2>
-                <p>${lang.description}</p>
-                <a href="/privacy-policy/" class="privacy-policy-link">${lang.privacy}</a>
-            </div>
-            <div class="cookie-consent-buttons">
-                <button id="acceptAllBtn" class="cookie-btn accept-btn">${lang.accept}</button>
-                <button id="adjustConsentBtn" class="cookie-btn adjust-btn">${lang.customize}</button>
-                <button id="rejectAllBtn" class="cookie-btn reject-btn">${lang.reject}</button>
-            </div>
+const html = `
+<!-- Main Consent Banner -->
+<div id="cookieConsentBanner" class="cookie-consent-banner">
+    <div class="cookie-consent-container">
+        ${languageSelector}
+        <div class="cookie-consent-content">
+            <h2>${lang.title}</h2>
+            <p>${lang.description}</p>
+            <a href="/privacy-policy/" class="privacy-policy-link">${lang.privacy}</a>
+        </div>
+        <div class="cookie-consent-buttons">
+            <button id="acceptAllBtn" class="cookie-btn accept-btn">${lang.accept}</button>
+            <button id="adjustConsentBtn" class="cookie-btn adjust-btn">${lang.customize}</button>
+            <button id="rejectAllBtn" class="cookie-btn reject-btn">${lang.reject}</button>
         </div>
     </div>
+</div>
 
     <!-- Settings Modal -->
     <div id="cookieSettingsModal" class="cookie-settings-modal">
@@ -1711,42 +1715,34 @@ function injectConsentHTML(detectedCookies, language = 'en') {
     
     <style>
     /* Main Banner Styles */
-  /* Main Banner Styles */
 .cookie-consent-banner {
-  position: fixed;
-  bottom: 20px;
-  ${config.behavior.bannerPosition === 'left' ? 'left: 20px;' : 'right: 20px;'}
-  min-width: 300px; /* Minimum width to ensure it doesn't shrink too much */
-  max-width: 90%; /* Prevent it from becoming too wide on large screens */
-  width: fit-content; /* Let the width adjust to the content */
-  background: ${config.bannerStyle.background};
-  border-radius: ${config.bannerStyle.borderRadius};
-  box-shadow: ${config.bannerStyle.boxShadow};
-  z-index: 9999;
-  padding: 15px; /* Add padding for spacing */
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
-  display: flex; /* Use flex to center content */
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Center content horizontally */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  display: none;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all ${config.behavior.bannerAnimation.duration}s ${config.behavior.bannerAnimation.easing};
-  ${
-    config.bannerStyle.border.enabled
-      ? `border: ${config.bannerStyle.border.width} ${config.bannerStyle.border.style} ${config.bannerStyle.border.color};`
-      : 'border: none;'
-  }
-  overflow: hidden;
+    position: fixed;
+    bottom: 20px;
+    ${config.behavior.bannerPosition === 'left' ? 'left: 20px;' : 'right: 20px;'}
+    width: ${config.bannerStyle.width};
+    max-width: ${config.bannerStyle.maxWidth};
+    min-width: ${config.bannerStyle.minWidth};
+    background: ${config.bannerStyle.background};
+    border-radius: ${config.bannerStyle.borderRadius};
+    box-shadow: ${config.bannerStyle.boxShadow};
+    z-index: 9999;
+    padding: ${config.bannerStyle.padding};
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    display: none;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all ${config.behavior.bannerAnimation.duration}s ${config.behavior.bannerAnimation.easing};
+    ${config.bannerStyle.border.enabled ? 
+        `border: ${config.bannerStyle.border.width} ${config.bannerStyle.border.style} ${config.bannerStyle.border.color};` : 
+        'border: none;'}
+    overflow: hidden;
 }
 
-/* Show state for the banner */
-.cookie-consent-banner.show {
-  transform: translateY(0);
-  opacity: 1;
-  display: flex; /* Ensure display is flex when shown */
-}
+    .cookie-consent-banner.show {
+        transform: translateY(0);
+        opacity: 1;
+        display: block;
+    }
 
     .cookie-consent-content h2 {
         margin: 0 0 16px 0;
@@ -1780,23 +1776,25 @@ function injectConsentHTML(detectedCookies, language = 'en') {
 
 .cookie-consent-buttons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 12px;
     margin-top: 8px;
 }
 
-    .cookie-btn {
-        padding: ${config.buttonStyle.padding};
-        border-radius: ${config.buttonStyle.borderRadius};
-        cursor: pointer;
-        font-weight: ${config.buttonStyle.fontWeight};
-        font-size: ${config.buttonStyle.fontSize};
-        transition: ${config.buttonStyle.transition};
-        text-align: center;
-        border: none;
-        flex: 1;
-        letter-spacing: 0.2px;
-    }
+.cookie-btn {
+    padding: ${config.buttonStyle.padding};
+    border-radius: ${config.buttonStyle.borderRadius};
+    cursor: pointer;
+    font-weight: ${config.buttonStyle.fontWeight};
+    font-size: ${config.buttonStyle.fontSize};
+    transition: ${config.buttonStyle.transition};
+    text-align: center;
+    border: none;
+    flex: 1;
+    min-width: ${config.buttonStyle.minWidth};
+    white-space: ${config.buttonStyle.whiteSpace};
+    letter-spacing: 0.2px;
+}
 
     .adjust-btn {
         background-color: ${config.buttonStyle.adjust.background};
