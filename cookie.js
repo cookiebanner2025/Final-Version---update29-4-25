@@ -86,7 +86,7 @@ const config = {
         background: '#ffffff',
         borderRadius: '12px',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
-        width: '440px',
+        width: '465px',
         padding: '24px',
         textColor: '#2c3e50',
         linkColor: '#3498db',
