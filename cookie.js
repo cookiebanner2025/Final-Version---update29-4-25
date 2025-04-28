@@ -1710,207 +1710,43 @@ function injectConsentHTML(detectedCookies, language = 'en') {
     </div>
     
     <style>
-
-
-
-
-
-
-/* Style for the consent banner container */
-#cookieBanner {
-    /* Ensure the banner has a flexible width, but doesn't exceed a reasonable maximum */
-    width: auto;
-    max-width: 90%; /* Prevent the banner from taking up the entire screen width */
-    min-width: 300px; /* Ensure a minimum width for smaller screens */
-    padding: 20px; /* Add padding for better spacing */
-    box-sizing: border-box; /* Ensure padding is included in the width */
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    gap: 15px; /* Add spacing between elements */
-    background-color: #fff; /* Example background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-/* Style for the banner's text (title, description, privacy link) */
-#cookieBanner .banner-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    word-wrap: break-word; /* Allow long words to break and wrap */
-}
-
-#cookieBanner .banner-description {
-    font-size: 0.9rem;
-    line-height: 1.4; /* Improve readability with line spacing */
-    word-wrap: break-word; /* Allow long words to break and wrap */
-    margin-bottom: 10px;
-}
-
-#cookieBanner .privacy-link {
-    font-size: 0.9rem;
-    color: #007bff; /* Example link color */
-    text-decoration: underline;
-    margin-bottom: 10px;
-    display: inline-block; /* Ensure the link wraps properly */
-}
-
-/* Container for the buttons */
-#cookieBanner .button-container {
-    display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
-    gap: 10px; /* Space between buttons */
-    justify-content: center; /* Center the buttons */
-}
-
-/* Style for the buttons */
-#cookieBanner .cookie-button {
-    /* Remove fixed width to allow buttons to size based on content */
-    padding: 10px 20px; /* Add padding for better spacing */
-    min-width: 100px; /* Ensure a minimum width for smaller text */
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    white-space: nowrap; /* Prevent button text from wrapping */
-    box-sizing: border-box;
-    transition: background-color 0.3s ease; /* Smooth color transition on hover */
-}
-
-/* Specific styles for each button */
-#cookieBanner .accept-button {
-    background-color: #28a745; /* Green for Accept */
-    color: #fff;
-}
-
-#cookieBanner .accept-button:hover {
-    background-color: #218838; /* Darker green on hover */
-}
-
-#cookieBanner .customize-button {
-    background-color: #fff; /* White for Customize */
-    border: 1px solid #ccc;
-    color: #333;
-}
-
-#cookieBanner .customize-button:hover {
-    background-color: #f8f9fa; /* Light gray on hover */
-}
-
-#cookieBanner .reject-button {
-    background-color: #dc3545; /* Red for Reject */
-    color: #fff;
-}
-
-#cookieBanner .reject-button:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
-
-/* Ensure the language dropdown doesn't affect the layout */
-#cookieLanguageSelect {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px;
-    font-size: 0.9rem;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 600px) {
-    #cookieBanner {
-        min-width: 90%; /* Take up more space on small screens */
-        padding: 15px;
-    }
-
-    #cookieBanner .button-container {
-        flex-direction: column; /* Stack buttons vertically on small screens */
-        gap: 8px;
-    }
-
-    #cookieBanner .cookie-button {
-        width: 100%; /* Full width buttons on small screens */
-        min-width: unset; /* Remove min-width constraint */
-        padding: 10px;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     /* Main Banner Styles */
-    .cookie-consent-banner {
-        position: fixed;
-        bottom: 20px;
-        ${config.behavior.bannerPosition === 'left' ? 'left: 20px;' : 'right: 20px;'}
-        width: ${config.bannerStyle.width};
-        background: ${config.bannerStyle.background};
-        border-radius: ${config.bannerStyle.borderRadius};
-        box-shadow: ${config.bannerStyle.boxShadow};
-        z-index: 9999;
-        padding: ${config.bannerStyle.padding};
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        display: none;
-        transform: translateY(20px);
-        opacity: 0;
-        transition: all ${config.behavior.bannerAnimation.duration}s ${config.behavior.bannerAnimation.easing};
-        ${config.bannerStyle.border.enabled ? 
-            `border: ${config.bannerStyle.border.width} ${config.bannerStyle.border.style} ${config.bannerStyle.border.color};` : 
-            'border: none;'}
-        overflow: hidden;
-    }
+  /* Main Banner Styles */
+.cookie-consent-banner {
+  position: fixed;
+  bottom: 20px;
+  ${config.behavior.bannerPosition === 'left' ? 'left: 20px;' : 'right: 20px;'}
+  min-width: 300px; /* Minimum width to ensure it doesn't shrink too much */
+  max-width: 90%; /* Prevent it from becoming too wide on large screens */
+  width: fit-content; /* Let the width adjust to the content */
+  background: ${config.bannerStyle.background};
+  border-radius: ${config.bannerStyle.borderRadius};
+  box-shadow: ${config.bannerStyle.boxShadow};
+  z-index: 9999;
+  padding: 15px; /* Add padding for spacing */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  display: flex; /* Use flex to center content */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center content horizontally */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  display: none;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all ${config.behavior.bannerAnimation.duration}s ${config.behavior.bannerAnimation.easing};
+  ${
+    config.bannerStyle.border.enabled
+      ? `border: ${config.bannerStyle.border.width} ${config.bannerStyle.border.style} ${config.bannerStyle.border.color};`
+      : 'border: none;'
+  }
+  overflow: hidden;
+}
 
-    .cookie-consent-banner.show {
-        transform: translateY(0);
-        opacity: 1;
-        display: block;
-    }
+/* Show state for the banner */
+.cookie-consent-banner.show {
+  transform: translateY(0);
+  opacity: 1;
+  display: flex; /* Ensure display is flex when shown */
+}
 
     .cookie-consent-content h2 {
         margin: 0 0 16px 0;
