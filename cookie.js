@@ -1605,6 +1605,23 @@ function changeLanguage(languageCode) {
             dashboardModal.querySelector('.cookie-analytics-body').innerHTML = generateAnalyticsDashboard(languageCode);
         }
     }
+
+    // NEW CODE ADDED HERE:
+    // Update analytics dashboard title if visible
+    const dashboardTitle = document.querySelector('.cookie-analytics-header h2');
+    if (dashboardTitle) {
+        dashboardTitle.textContent = lang.dashboardTitle;
+    }
+
+    // Update password prompt if visible
+    const passwordPrompt = document.querySelector('.password-prompt h3');
+    const passwordSubmit = document.getElementById('dashboardPasswordSubmit');
+    const passwordError = document.getElementById('passwordError');
+    if (passwordPrompt) passwordPrompt.textContent = lang.passwordPrompt;
+    if (passwordSubmit) passwordSubmit.textContent = lang.passwordSubmit;
+    if (passwordError && passwordError.textContent) {
+        passwordError.textContent = translations[languageCode].passwordIncorrect;
+    }
     
     // Store selected language in cookie
     if (config.behavior.rememberLanguage) {
@@ -2997,18 +3014,16 @@ function setupPasswordPromptEvents() {
         passwordSubmit.addEventListener('click', function() {
             const passwordInput = document.getElementById('dashboardPasswordInput');
             const errorMessage = document.getElementById('passwordError');
+            const lang = document.getElementById('cookieLanguageSelect') ? 
+                document.getElementById('cookieLanguageSelect').value : 'en';
             
             if (passwordInput.value === config.analytics.dashboardPassword) {
                 isDashboardAuthenticated = true;
                 setCookie('dashboard_auth', 'true', config.analytics.passwordCookieDuration);
                 
                 // Update the dashboard content
-                const lang = document.getElementById('cookieLanguageSelect') ? 
-                    document.getElementById('cookieLanguageSelect').value : 'en';
                 document.querySelector('.cookie-analytics-body').innerHTML = generateAnalyticsDashboard(lang);
             } else {
-                const lang = document.getElementById('cookieLanguageSelect') ? 
-                    document.getElementById('cookieLanguageSelect').value : 'en';
                 errorMessage.textContent = translations[lang].passwordIncorrect;
             }
         });
@@ -3119,6 +3134,9 @@ function hideCookieSettings() {
 }
 
 function showAnalyticsDashboard() {
+    const lang = document.getElementById('cookieLanguageSelect') ? 
+        document.getElementById('cookieLanguageSelect').value : 'en';
+    
     if (config.analytics.passwordProtect && !isDashboardAuthenticated) {
         const modal = document.getElementById('cookieAnalyticsModal');
         modal.style.display = 'flex';
@@ -3127,8 +3145,6 @@ function showAnalyticsDashboard() {
         }, 10);
     } else {
         const modal = document.getElementById('cookieAnalyticsModal');
-        const lang = document.getElementById('cookieLanguageSelect') ? 
-            document.getElementById('cookieLanguageSelect').value : 'en';
         document.querySelector('.cookie-analytics-body').innerHTML = generateAnalyticsDashboard(lang);
         modal.style.display = 'flex';
         setTimeout(() => {
