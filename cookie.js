@@ -1581,6 +1581,12 @@ function changeLanguage(languageCode) {
         modal.querySelector('#rejectAllSettingsBtn').textContent = lang.reject;
         modal.querySelector('#saveSettingsBtn').textContent = lang.save;
         modal.querySelector('#acceptAllSettingsBtn').textContent = lang.accept;
+        
+        // Update "See Consent Analytics" link
+        const seeAnalyticsLink = modal.querySelector('.see-analytics-link');
+        if (seeAnalyticsLink) {
+            seeAnalyticsLink.textContent = lang.seeAnalytics;
+        }
     }
     
     // Update floating button title
@@ -1590,16 +1596,14 @@ function changeLanguage(languageCode) {
     }
     
     // Update analytics dashboard if visible
-    const dashboard = document.querySelector('.analytics-dashboard');
-    if (dashboard) {
-        dashboard.innerHTML = generateAnalyticsDashboard(languageCode);
-    }
-    
-    // Update password prompt if visible
-    const passwordPrompt = document.querySelector('.password-prompt');
-    if (passwordPrompt) {
-        passwordPrompt.innerHTML = generatePasswordPrompt(languageCode);
-        setupPasswordPromptEvents();
+    const dashboardModal = document.getElementById('cookieAnalyticsModal');
+    if (dashboardModal && dashboardModal.style.display === 'flex') {
+        if (config.analytics.passwordProtect && !isDashboardAuthenticated) {
+            dashboardModal.querySelector('.cookie-analytics-body').innerHTML = generatePasswordPrompt(languageCode);
+            setupPasswordPromptEvents();
+        } else {
+            dashboardModal.querySelector('.cookie-analytics-body').innerHTML = generateAnalyticsDashboard(languageCode);
+        }
     }
     
     // Store selected language in cookie
@@ -2873,7 +2877,6 @@ function shouldShowBanner() {
     return true;
 }
 
-// Main initialization function
 // Main initialization function
 function initializeCookieConsent(detectedCookies, language) {
     const consentGiven = getCookie('cookie_consent');
