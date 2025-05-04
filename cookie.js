@@ -1,7 +1,7 @@
 
 const config = {
     // Domain restriction
-    allowedDomains: ['dev-rpractice.pantheonsite.io', 'assistenzaelettrodomestici-firenze.com'],
+    allowedDomains: ['dev-rpractice.pantheonsite.io', 'www.yesyoudeserve.tours'],
     
     // Behavior configuration
     behavior: {
