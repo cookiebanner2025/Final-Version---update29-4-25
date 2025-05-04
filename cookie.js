@@ -1,7 +1,7 @@
 
 const config = {
     // Domain restriction
-    allowedDomains: ['dev-rpractice.pantheonsite.io', 'yesyoudeserve.tours'],
+    allowedDomains: ['dev-rpractice.pantheonsite.io', 'www.yesyoudeserve.tours'],
     
     // Behavior configuration
     behavior: {
